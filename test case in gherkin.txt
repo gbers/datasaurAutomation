@@ -1,0 +1,145 @@
+Feature: User login
+	Background:
+		Given user already install whatsapp desktop
+		And user not login to whatsapp
+		And user open whatsapp desktop
+	Scenario: User should able to regenerate QR code if reach maximum time to scan
+		Given user in whatsapp start up page
+		When user select get started button
+		Then QR code should appear
+		And how to set up instruction appears
+		When user does not scan after maximum time to scan
+		Then Retry QR button apprears
+		
+	Scenario: User should able to login from whatsapp desktop application
+		Given user in scan QR page
+		When user scan QR code
+		Then open whatsapp loading page
+
+Feature: Sync with acccount
+	Background:
+		Given user loggedin to whatsapp
+		And user has previous data from mobile phone
+		And user has previous data from web
+	Scenario: User sync data from server
+		Given user open whatsapp desktop
+		When sync data from server done
+		Then display all available chat
+
+Feature: Send and receive message
+	Background:
+		Given user open whatsapp app
+		And user loggedin to whatsapp
+	Scenario: User should able to send message
+		Given user is in whatsapp home page
+		When the user clicks on the "New Chat" button
+		And enters a phone number or contact name in the "To" field
+		And types a message in the message field "aphabet numbers 1234 symbol !@#$%^&"
+		And clicks the "Send" button
+		Then the message "aphabet numbers 1234 symbol !@#$%^&" should be sent to the intended recipien
+	Scenario: User should able to send message
+		Given user is in whatsapp home page
+		When other contact send message to user
+		Then message notification appears
+		Then message displayed on conversation thread
+		
+Feature: voice call
+	Background:
+		Given user open whatsapp app
+		And user loggedin to whatsapp
+	Scenario:
+		Given the user has WhatsApp Desktop open
+		When the user clicks on the "New Chat" button
+		And enters a phone number or contact name in the "To" field
+		And clicks on the "Voice Call" button
+		Then a voice call should be initiated with the intended recipient.
+		When the user clicks on the "Hang Up" button
+		Then the call should be disconnected.
+Feature: Video call
+	Background:
+		Given user open whatsapp app
+		And user loggedin to whatsapp	
+	Scenario:
+		Given user in conversation thread
+		When clicks on the "Video Call" button
+		Then a video call should be initiated with the intended recipient.
+		When the user clicks on the "Hang Up" button
+		Then the call should be disconnected.
+	
+Feature: Send attachment
+	Background:
+		Given user open whatsapp app
+		And user loggedin to whatsapp
+	Scenario: User should able to send file to conversation thread
+		Given user select listed conversation
+		When the user clicks on the "Attachment" button
+		And select File upload button
+		And selects a pdf file to attach
+		And selects a image file to attach
+		And selects a excel file to attach
+		And input message "attachment" in file preview
+		And clicks the "Send" button
+		Then the attachment should be sent to the intended recipient
+		And message "attachment" should be sent to the intended recipient
+	
+Feature: Delete message
+	Background:
+		Given user open whatsapp app
+		And user loggedin
+	Scenario: User should able to delete for every one their own message
+		Given the user has WhatsApp Desktop open
+		When the user clicks on a conversation thread
+		And selects a message
+		When the user right clicks on the message sent by user
+		And user select delete
+		Then delete options appear
+		When user select delete for every one
+		Then the selected message should be deleted from the conversation thread sender and receiver
+	Scenario: User should able to delete for me their own message
+		Given the user has WhatsApp Desktop open
+		When the user clicks on a conversation thread
+		And selects a message
+		When the user right clicks on the message sent by user
+		And user select delete
+		Then delete options appear
+		When user select delete for me
+		Then the selected message should be deleted from the conversation thread sender
+	Scenario: User should able to delete for me sender message
+		Given the user has WhatsApp Desktop open
+		When the user clicks on a conversation thread
+		And selects a message
+		When the user right clicks on the message sent by others
+		And user select delete for me
+		Then the selected message should be deleted from the conversation thread 		
+
+Feature: Retry send message
+	Background:
+		Given user loggedin to whatsapp
+		And user open whatsapp
+	Scenario: Auto retry to send should working if user send message when no connection
+		Given user in conversation thread
+		And no internet connection
+		And types a message ":) no internet" in the message field
+		And clicks the "Send" button
+		Then the message should not be sent to the intended recipient
+		When user connect to the internet
+		Then the message should be auto sent to the intended recipient
+
+Feature: Logout
+	Background:
+		Given user loggedin
+	Scenario: User should able to logout from whatsapp desktop
+		Given user in whatsapp main page
+		When the user clicks on the "Settings" button
+		And clicks on the "Log Out" button
+		And confirms the logout action
+		Then the user should be logged out of WhatsApp Desktop
+	
+Feature: upgrage to latest version
+
+	Scenario: User should able to upgrage app to newer version
+		Given user upgrage app to newer version
+		When user open app
+		Then retrive all data from server
+		And display all data in main page
+		And app not crash
